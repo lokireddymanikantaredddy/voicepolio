@@ -22,7 +22,7 @@ export function RollingText() {
 
   return (
     <div className="relative h-8 overflow-hidden text-2xl font-medium text-primary">
-      <AnimatePresence>
+      <AnimatePresence mode="wait">
         <motion.p
           key={roles[index]}
           initial={{ opacity: 0, y: 20 }}
