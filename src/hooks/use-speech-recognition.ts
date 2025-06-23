@@ -22,12 +22,13 @@ export const useSpeechRecognition = (onResult: (transcript: string) => void) => 
     setHasSupport(true);
 
     const recognition = new SpeechRecognition();
-    recognition.continuous = false;
+    recognition.continuous = true;
     recognition.lang = 'en-US';
     recognition.interimResults = false;
 
     recognition.onresult = (event: any) => {
-      const transcript = event.results[0][0].transcript;
+      const last = event.results.length - 1;
+      const transcript = event.results[last][0].transcript.trim();
       onResult(transcript);
     };
 
