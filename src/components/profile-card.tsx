@@ -10,7 +10,7 @@ export function ProfileCard() {
   const [isFlipped, setIsFlipped] = useState(false);
 
   return (
-    <div className="group w-full max-w-sm h-[450px] [perspective:1000px]" onClick={() => setIsFlipped(!isFlipped)} role="button" tabIndex={0} onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && setIsFlipped(!isFlipped)} aria-pressed={isFlipped}>
+    <div id="profile-card-container" className="group w-full max-w-sm h-[450px] [perspective:1000px]" onClick={() => setIsFlipped(!isFlipped)} role="button" tabIndex={0} onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && setIsFlipped(!isFlipped)} aria-pressed={isFlipped}>
       <div
         className={cn(
           "relative w-full h-full rounded-xl shadow-xl transition-all duration-700 ease-in-out [transform-style:preserve-3d]",

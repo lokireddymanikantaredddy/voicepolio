@@ -15,7 +15,7 @@ export type Project = {
   repoUrl?: string;
 };
 
-export function ProjectCard({ project }: { project: Project }) {
+export function ProjectCard({ project, index }: { project: Project; index: number }) {
   return (
     <Card className="flex flex-col h-full overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
       <CardHeader className="p-0">
@@ -39,14 +39,14 @@ export function ProjectCard({ project }: { project: Project }) {
       </CardContent>
       <CardFooter className="p-6 pt-0 flex gap-2">
         {project.liveUrl && (
-          <Button asChild className="flex-1">
+          <Button asChild className="flex-1" id={`project-${index}-live`}>
             <Link href={project.liveUrl} target="_blank" rel="noopener noreferrer">
               <ExternalLink className="mr-2 h-4 w-4" /> Live Demo
             </Link>
           </Button>
         )}
         {project.repoUrl && (
-          <Button asChild variant="outline" className="flex-1">
+          <Button asChild variant="outline" className="flex-1" id={`project-${index}-source`}>
             <Link href={project.repoUrl} target="_blank" rel="noopener noreferrer">
               <Github className="mr-2 h-4 w-4" /> Source
             </Link>
