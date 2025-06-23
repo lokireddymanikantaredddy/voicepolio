@@ -15,7 +15,7 @@ export function RollingText() {
   useEffect(() => {
     const interval = setInterval(() => {
       setIndex((prevIndex) => (prevIndex + 1) % roles.length);
-    }, 2500); // Change text every 2.5 seconds
+    }, 2500);
 
     return () => clearInterval(interval);
   }, []);
@@ -23,16 +23,16 @@ export function RollingText() {
   return (
     <div className="relative h-8 overflow-hidden text-2xl font-medium text-primary">
       <AnimatePresence mode="wait">
-        <motion.p
+        <motion.div
           key={roles[index]}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -20 }}
-          transition={{ duration: 0.4 }}
-          className="absolute w-full h-full"
+          initial={{ y: "100%" }}
+          animate={{ y: "0%" }}
+          exit={{ y: "-100%" }}
+          transition={{ duration: 0.5, ease: 'easeInOut' }}
+          className="absolute inset-0"
         >
           {roles[index]}
-        </motion.p>
+        </motion.div>
       </AnimatePresence>
     </div>
   );
