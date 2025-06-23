@@ -20,7 +20,7 @@ export default function Home() {
           <div className="container px-4 md:px-6">
             <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
               <div className="flex flex-col items-start justify-center space-y-4">
-                <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl xl:text-7xl/none font-headline">
+                <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl xl:text-6xl/none font-headline">
                   LOKIREDDY MANIKANTA REDDY
                 </h1>
                 <RollingText />
