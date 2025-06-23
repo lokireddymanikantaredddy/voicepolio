@@ -1,4 +1,5 @@
 import type { Project } from '@/components/project-card';
+import type { Education } from '@/components/education-card';
 
 export const projects: Project[] = [
   {
@@ -35,3 +36,18 @@ export const skills = {
   backend: ['Node.js', 'Python', 'GraphQL', 'PostgreSQL', 'Firebase', 'Docker'],
   design: ['Figma', 'Sketch', 'Adobe XD', 'User Research', 'Prototyping'],
 };
+
+export const education: Education[] = [
+  {
+    institution: 'University of Design & Technology',
+    degree: 'M.S. in Human-Computer Interaction',
+    years: '2020 - 2022',
+    description: 'Focused on user-centered design methodologies, interactive prototyping, and usability testing.'
+  },
+  {
+    institution: 'State University of Arts & Science',
+    degree: 'B.S. in Computer Science',
+    years: '2016 - 2020',
+    description: 'Coursework included data structures, algorithms, web development, and software engineering principles.'
+  }
+];

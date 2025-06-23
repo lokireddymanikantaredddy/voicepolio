@@ -5,8 +5,9 @@ import { SkillBadge } from '@/components/skill-badge';
 import { ContactForm } from '@/components/contact-form';
 import { Chatbot } from '@/components/chatbot';
 import { VoiceTooltip } from '@/components/voice-tooltip';
-import { Github, Linkedin, Twitter, Code, Brush, Server } from 'lucide-react';
-import { projects, skills } from '@/lib/data';
+import { EducationCard } from '@/components/education-card';
+import { Github, Linkedin, Twitter, Code, Brush, Server, GraduationCap } from 'lucide-react';
+import { projects, skills, education } from '@/lib/data';
 
 export default function Home() {
   return (
@@ -101,6 +102,24 @@ export default function Home() {
                   {skills.design.map(skill => <SkillBadge key={skill} skill={skill} />)}
                 </div>
               </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="education" className="w-full py-20 md:py-32 border-t">
+          <div className="container px-4 md:px-6">
+            <div className="flex flex-col items-center justify-center space-y-4 text-center">
+              <div className="space-y-2">
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">Education</h2>
+                <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                  My academic background and qualifications.
+                </p>
+              </div>
+            </div>
+            <div className="mx-auto grid max-w-3xl gap-8 mt-12">
+              {education.map((edu, index) => (
+                <EducationCard key={index} education={edu} />
+              ))}
             </div>
           </div>
         </section>

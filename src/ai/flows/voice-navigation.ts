@@ -46,7 +46,7 @@ const prompt = ai.definePrompt({
   output: {schema: VoiceNavigationOutputSchema},
   prompt: `You are an AI assistant that helps users navigate a portfolio website using voice commands.
 
-The portfolio has the following sections: "Home", "Projects", "Skills", "Contact".
+The portfolio has the following sections: "Home", "Projects", "Skills", "Education", "Contact".
 
 The user can also say:
 - "Change theme" to toggle between light and dark mode.
