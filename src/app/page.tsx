@@ -25,7 +25,7 @@ export default function Home() {
                 </h1>
                 <RollingText />
                 <p className="max-w-[600px] text-muted-foreground md:text-xl">
-                  I build beautiful, interactive, and accessible web experiences. Passionate about blending technology with user-centric design.
+                  a dedicated Full Stack Developer with a strong focus on creating clean, responsive, and intuitive user experiences. I specialize in building scalable web applications using React.js, Tailwind CSS, Node.js, and the MERN stack.  My passion lies in blending great design with powerful functionality — whether it's integrating modern UI animations, optimizing performance, or experimenting with innovative features like voice-controlled navigation.  I believe in writing maintainable code, staying curious, and continuously learning to deliver impactful digital solutions.
                 </p>
                 <div className="flex gap-4 mt-4">
                   <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
