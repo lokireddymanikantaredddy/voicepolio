@@ -21,7 +21,7 @@ export function RollingText() {
   }, []);
 
   return (
-    <div className="relative h-8 overflow-hidden text-2xl font-medium text-primary">
+    <div className="h-8 overflow-hidden text-2xl font-medium text-primary">
       <AnimatePresence mode="wait">
         <motion.div
           key={roles[index]}
@@ -29,7 +29,6 @@ export function RollingText() {
           animate={{ y: "0%" }}
           exit={{ y: "-100%" }}
           transition={{ duration: 0.5, ease: 'easeInOut' }}
-          className="absolute inset-0"
         >
           {roles[index]}
         </motion.div>
