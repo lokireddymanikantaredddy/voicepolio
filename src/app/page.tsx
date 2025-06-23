@@ -1,3 +1,4 @@
+
 import { Header } from '@/components/header';
 import { ProfileCard } from '@/components/profile-card';
 import { ProjectCard } from '@/components/project-card';
@@ -20,7 +21,7 @@ export default function Home() {
             <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
               <div className="flex flex-col items-start justify-center space-y-4">
                 <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl xl:text-7xl/none font-headline">
-                  Jane Doe
+                  LOKIREDDY MANIKANTA REDDY
                 </h1>
                 <RollingText />
                 <p className="max-w-[600px] text-muted-foreground md:text-xl">

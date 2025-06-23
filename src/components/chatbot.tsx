@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from 'react';
@@ -26,7 +27,7 @@ const formSchema = z.object({
 
 export function Chatbot() {
   const [messages, setMessages] = useState<Message[]>([
-    { id: 1, text: "Hello! I'm Jane's AI assistant. Ask me anything about her work, projects, or skills.", sender: 'bot' }
+    { id: 1, text: "Hello! I'm LOKIREDDY MANIKANTA REDDY's AI assistant. Ask me anything about his work, projects, or skills.", sender: 'bot' }
   ]);
   const [isThinking, setIsThinking] = useState(false);
 

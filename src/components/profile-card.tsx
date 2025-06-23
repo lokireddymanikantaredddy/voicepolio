@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from 'react';
@@ -21,7 +22,7 @@ export function ProfileCard() {
         <div className="absolute inset-0 [backface-visibility:hidden]">
           <Image
             src="https://placehold.co/400x450.png"
-            data-ai-hint="woman portrait"
+            data-ai-hint="man portrait"
             alt="Profile portrait"
             width={400}
             height={450}
@@ -29,7 +30,7 @@ export function ProfileCard() {
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent rounded-xl" />
           <div className="absolute bottom-0 left-0 p-6">
-            <h3 className="text-2xl font-bold text-white font-headline">Jane Doe</h3>
+            <h3 className="text-2xl font-bold text-white font-headline">LOKIREDDY MANIKANTA REDDY</h3>
             <p className="text-white/90">Click to flip for more info</p>
           </div>
           <div className="absolute top-4 right-4">
