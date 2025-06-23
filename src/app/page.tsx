@@ -10,6 +10,7 @@ import { EducationCard } from '@/components/education-card';
 import { Github, Linkedin, Twitter, Code, Brush, Server, GraduationCap } from 'lucide-react';
 import { projects, skills, education } from '@/lib/data';
 import { RollingText } from '@/components/rolling-text';
+import { ScrollReveal } from '@/components/scroll-reveal';
 
 export default function Home() {
   return (
@@ -48,17 +49,21 @@ export default function Home() {
 
         <section id="projects" className="w-full py-8 md:py-12 lg:py-16 border-t">
           <div className="container px-4 md:px-6">
-            <div className="flex flex-col items-center justify-center space-y-4 text-center">
-              <div className="space-y-2">
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">My Projects</h2>
-                <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  Here are some of the things I've built.
-                </p>
+            <ScrollReveal>
+              <div className="flex flex-col items-center justify-center space-y-4 text-center">
+                <div className="space-y-2">
+                  <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">My Projects</h2>
+                  <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                    Here are some of the things I've built.
+                  </p>
+                </div>
               </div>
-            </div>
+            </ScrollReveal>
             <div className="mx-auto grid max-w-5xl items-start gap-8 sm:grid-cols-2 md:gap-12 lg:max-w-none lg:grid-cols-3 mt-12">
               {projects.map((project, index) => (
-                <ProjectCard key={index} project={project} index={index} />
+                <ScrollReveal key={index} delay={0.1 * index}>
+                  <ProjectCard project={project} index={index} />
+                </ScrollReveal>
               ))}
             </div>
           </div>
@@ -66,59 +71,71 @@ export default function Home() {
 
         <section id="skills" className="w-full py-8 md:py-12 lg:py-16 border-t bg-muted/40">
           <div className="container px-4 md:px-6">
-            <div className="flex flex-col items-center justify-center space-y-4 text-center">
-              <div className="space-y-2">
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">My Skills</h2>
-                <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  A look at the technologies, languages, and tools I use.
-                </p>
+            <ScrollReveal>
+              <div className="flex flex-col items-center justify-center space-y-4 text-center">
+                <div className="space-y-2">
+                  <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">My Skills</h2>
+                  <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                    A look at the technologies, languages, and tools I use.
+                  </p>
+                </div>
               </div>
-            </div>
+            </ScrollReveal>
             <div className="mx-auto grid max-w-3xl items-start gap-8 sm:grid-cols-2 md:gap-12 lg:max-w-5xl lg:grid-cols-3 mt-12">
-              <div className="flex flex-col gap-4">
-                <div className="flex items-center gap-3">
-                  <Code className="h-8 w-8 text-primary" />
-                  <h3 className="text-xl font-bold font-headline">Frontend</h3>
+              <ScrollReveal delay={0.1}>
+                <div className="flex flex-col gap-4">
+                  <div className="flex items-center gap-3">
+                    <Code className="h-8 w-8 text-primary" />
+                    <h3 className="text-xl font-bold font-headline">Frontend</h3>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {skills.frontend.map(skill => <SkillBadge key={skill} skill={skill} />)}
+                  </div>
                 </div>
-                <div className="flex flex-wrap gap-2">
-                  {skills.frontend.map(skill => <SkillBadge key={skill} skill={skill} />)}
+              </ScrollReveal>
+              <ScrollReveal delay={0.2}>
+                <div className="flex flex-col gap-4">
+                  <div className="flex items-center gap-3">
+                    <Server className="h-8 w-8 text-primary" />
+                    <h3 className="text-xl font-bold font-headline">Backend</h3>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {skills.backend.map(skill => <SkillBadge key={skill} skill={skill} />)}
+                  </div>
                 </div>
-              </div>
-              <div className="flex flex-col gap-4">
-                <div className="flex items-center gap-3">
-                  <Server className="h-8 w-8 text-primary" />
-                  <h3 className="text-xl font-bold font-headline">Backend</h3>
+              </ScrollReveal>
+              <ScrollReveal delay={0.3}>
+                <div className="flex flex-col gap-4">
+                  <div className="flex items-center gap-3">
+                    <Brush className="h-8 w-8 text-primary" />
+                    <h3 className="text-xl font-bold font-headline">Design</h3>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {skills.design.map(skill => <SkillBadge key={skill} skill={skill} />)}
+                  </div>
                 </div>
-                <div className="flex flex-wrap gap-2">
-                  {skills.backend.map(skill => <SkillBadge key={skill} skill={skill} />)}
-                </div>
-              </div>
-              <div className="flex flex-col gap-4">
-                <div className="flex items-center gap-3">
-                  <Brush className="h-8 w-8 text-primary" />
-                  <h3 className="text-xl font-bold font-headline">Design</h3>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {skills.design.map(skill => <SkillBadge key={skill} skill={skill} />)}
-                </div>
-              </div>
+              </ScrollReveal>
             </div>
           </div>
         </section>
 
         <section id="education" className="w-full py-8 md:py-12 lg:py-16 border-t">
           <div className="container px-4 md:px-6">
-            <div className="flex flex-col items-center justify-center space-y-4 text-center">
-              <div className="space-y-2">
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">Education</h2>
-                <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  My academic background and qualifications.
-                </p>
+            <ScrollReveal>
+              <div className="flex flex-col items-center justify-center space-y-4 text-center">
+                <div className="space-y-2">
+                  <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">Education</h2>
+                  <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                    My academic background and qualifications.
+                  </p>
+                </div>
               </div>
-            </div>
+            </ScrollReveal>
             <div className="mx-auto grid max-w-3xl gap-8 mt-12">
               {education.map((edu, index) => (
-                <EducationCard key={index} education={edu} />
+                <ScrollReveal key={index} delay={0.1 * index}>
+                  <EducationCard education={edu} />
+                </ScrollReveal>
               ))}
             </div>
           </div>
@@ -126,15 +143,19 @@ export default function Home() {
 
         <section id="contact" className="w-full py-8 md:py-12 lg:py-16 border-t">
           <div className="container grid items-center justify-center gap-4 px-4 text-center md:px-6">
-            <div className="space-y-3">
-              <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight font-headline">Get in Touch</h2>
-              <p className="mx-auto max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                Have a project in mind, or just want to say hi? Send me a message.
-              </p>
-            </div>
-            <div className="mx-auto w-full max-w-sm space-y-2">
-              <ContactForm />
-            </div>
+            <ScrollReveal>
+              <div className="space-y-3">
+                <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight font-headline">Get in Touch</h2>
+                <p className="mx-auto max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                  Have a project in mind, or just want to say hi? Send me a message.
+                </p>
+              </div>
+            </ScrollReveal>
+            <ScrollReveal delay={0.2}>
+              <div className="mx-auto w-full max-w-sm space-y-2">
+                <ContactForm />
+              </div>
+            </ScrollReveal>
           </div>
         </section>
       </main>
