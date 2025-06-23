@@ -11,11 +11,26 @@ export const useSpeechRecognition = (onResult: (transcript: string) => void) => 
   const [hasSupport, setHasSupport] = useState(false);
   const recognitionRef = useRef<any>(null);
 
+  // Use refs to hold the latest value of the callback and listening state
+  // This allows our main useEffect to run only once while still accessing fresh state.
+  const onResultRef = useRef(onResult);
+  const isListeningRef = useRef(isListening);
+
   useEffect(() => {
-    // Client-side only check
+    onResultRef.current = onResult;
+  }, [onResult]);
+
+  useEffect(() => {
+    isListeningRef.current = isListening;
+  }, [isListening]);
+
+
+  useEffect(() => {
+    // This effect runs once on mount to set up the speech recognition object
+    if (typeof window === 'undefined') return;
+
     SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
     if (!SpeechRecognition) {
-      setError("Speech recognition is not supported in this browser.");
       setHasSupport(false);
       return;
     }
@@ -25,33 +40,37 @@ export const useSpeechRecognition = (onResult: (transcript: string) => void) => 
     recognition.continuous = true;
     recognition.lang = 'en-US';
     recognition.interimResults = false;
+    recognitionRef.current = recognition;
 
     recognition.onresult = (event: any) => {
       const last = event.results.length - 1;
       const transcript = event.results[last][0].transcript.trim();
-      onResult(transcript);
+      onResultRef.current(transcript);
     };
 
     recognition.onerror = (event: any) => {
       if (event.error !== 'no-speech' && event.error !== 'aborted') {
         setError(`Speech recognition error: ${event.error}`);
       }
+      // If there's an error, we should stop listening.
       setIsListening(false);
     };
     
     recognition.onend = () => {
-        setIsListening(false);
-    };
-
-    recognitionRef.current = recognition;
-
-    return () => {
-      if (recognitionRef.current) {
-        recognitionRef.current.abort();
+      // If recognition ends, but our state says we should still be listening,
+      // it means it stopped unexpectedly. So, we restart it.
+      if (isListeningRef.current) {
+        recognition.start();
       }
     };
-  }, [onResult]);
-  
+
+    // Cleanup on unmount
+    return () => {
+      recognition.abort();
+    };
+  }, []); // Empty dependency array ensures this runs only once.
+
+  // These callbacks are now stable and won't change on re-renders, preventing errors.
   const startListening = useCallback(() => {
     if (recognitionRef.current && !isListening) {
         recognitionRef.current.start();
@@ -62,10 +81,11 @@ export const useSpeechRecognition = (onResult: (transcript: string) => void) => 
 
   const stopListening = useCallback(() => {
       if (recognitionRef.current && isListening) {
-          recognitionRef.current.stop();
+          recognitionRef.current.stop(); // This will trigger onend, but isListeningRef will be false
           setIsListening(false);
       }
   }, [isListening]);
+
 
   return { isListening, error, startListening, stopListening, hasSupport };
 };
