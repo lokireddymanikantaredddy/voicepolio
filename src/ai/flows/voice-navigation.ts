@@ -18,12 +18,12 @@ export type VoiceNavigationInput = z.infer<typeof VoiceNavigationInputSchema>;
 
 const VoiceNavigationOutputSchema = z.object({
   action: z
-    .enum(['navigate', 'click', 'stopListening', 'changeTheme', 'openProjectLink', 'unclear'])
+    .enum(['navigate', 'click', 'stopListening', 'changeTheme', 'openProjectLink', 'analyzeProject', 'unclear'])
     .describe('The action to perform.'),
   target: z
     .string()
     .describe(
-      'The target for the action. For "navigate", it is a section ID. For "click", it is an element ID. For "openProjectLink", it is the project title. For others, it can be an empty string.'
+      'The target for the action. For "navigate", it is a section ID. For "click", it is an element ID. For "openProjectLink" or "analyzeProject", it is the project title. For others, it can be an empty string.'
     ),
   linkType: z
     .enum(['live', 'source', 'none'])
@@ -52,6 +52,7 @@ The user can also say:
 - "Change theme" to toggle between light and dark mode.
 - "Stop listening" or "stop mic" to deactivate voice control.
 - "Flip the card" or "flip profile" to flip the profile card.
+- "Analyze [project name]" to get an AI analysis of a project.
 
 The user can also ask to open project links. Here are the available projects:
 {{#each projectTitles}}
@@ -70,6 +71,7 @@ Respond with the appropriate action and target in the JSON output.
 - For stopping the microphone, set action to "stopListening" and target to an empty string.
 - For flipping the profile card, set action to "click" and target to "profile-card-container".
 - For opening a project link, set action to "openProjectLink", target to the full project title you identified, and linkType to "live" or "source".
+- For analyzing a project, set action to "analyzeProject" and target to the full project title.
 
 If the command is unclear or doesn't match any known action, set action to "unclear" and target to the original voice command. If no linkType is specified for a project, default to "none".`,
 });
