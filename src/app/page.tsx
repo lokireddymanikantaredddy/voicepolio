@@ -8,6 +8,7 @@ import { VoiceTooltip } from '@/components/voice-tooltip';
 import { EducationCard } from '@/components/education-card';
 import { Github, Linkedin, Twitter, Code, Brush, Server, GraduationCap } from 'lucide-react';
 import { projects, skills, education } from '@/lib/data';
+import { RollingText } from '@/components/rolling-text';
 
 export default function Home() {
   return (
@@ -21,9 +22,7 @@ export default function Home() {
                 <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl xl:text-7xl/none font-headline">
                   Jane Doe
                 </h1>
-                <p className="text-2xl font-medium text-primary">
-                  Creative Developer & UI/UX Designer
-                </p>
+                <RollingText />
                 <p className="max-w-[600px] text-muted-foreground md:text-xl">
                   I build beautiful, interactive, and accessible web experiences. Passionate about blending technology with user-centric design.
                 </p>
