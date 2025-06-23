@@ -50,11 +50,11 @@ export function ProfileCard() {
             <div className="mt-8 space-y-4">
               <div className="flex items-center gap-4">
                 <Mail className="w-5 h-5 text-primary" />
-                <span>jane.doe@example.com</span>
+                <span>lokireddymanikanta12@gmail.com</span>
               </div>
               <div className="flex items-center gap-4">
                 <Phone className="w-5 h-5 text-primary" />
-                <span>+1 (234) 567-890</span>
+                <span>6302646861</span>
               </div>
             </div>
             <p className="mt-8 text-sm text-muted-foreground">Click again to flip back</p>
