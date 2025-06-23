@@ -6,12 +6,12 @@ import { voiceNavigation } from '@/ai/flows/voice-navigation';
 import { useSpeechRecognition } from '@/hooks/use-speech-recognition';
 import { Mic, MicOff } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
 
 export function VoiceButton() {
   const { toast } = useToast();
 
-  const handleVoiceResult = async (command: string) => {
+  const handleVoiceResult = useCallback(async (command: string) => {
     if(!command) return;
     try {
       toast({ title: "Heard you!", description: `Processing: "${command}"` });
@@ -38,10 +38,24 @@ export function VoiceButton() {
       });
       console.error(e);
     }
-  };
+  }, [toast]);
 
-  const { isListening, startListening, stopListening, hasSupport } = useSpeechRecognition(handleVoiceResult);
+  const { isListening, startListening, stopListening, hasSupport, error } = useSpeechRecognition(handleVoiceResult);
   
+  useEffect(() => {
+    if (error) {
+      let description = error;
+      if (error.includes('not-allowed')) {
+        description = "Microphone access was denied. Please allow microphone access in your browser settings to use this feature.";
+      }
+      toast({
+        variant: "destructive",
+        title: "Voice Recognition Error",
+        description: description,
+      });
+    }
+  }, [error, toast]);
+
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'v' && event.altKey) {
