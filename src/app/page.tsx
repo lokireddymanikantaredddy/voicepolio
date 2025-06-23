@@ -16,7 +16,7 @@ export default function Home() {
     <div className="flex min-h-screen w-full flex-col">
       <Header />
       <main className="flex-1">
-        <section id="home" className="w-full py-20 md:py-32 lg:py-40 bg-background">
+        <section id="home" className="w-full py-12 md:py-20 lg:py-24 bg-background">
           <div className="container px-4 md:px-6">
             <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
               <div className="flex flex-col items-start justify-center space-y-4">
@@ -46,7 +46,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="projects" className="w-full py-20 md:py-32 border-t">
+        <section id="projects" className="w-full py-12 md:py-20 lg:py-24 border-t">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
@@ -64,7 +64,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="skills" className="w-full py-20 md:py-32 border-t bg-muted/40">
+        <section id="skills" className="w-full py-12 md:py-20 lg:py-24 border-t bg-muted/40">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
@@ -106,7 +106,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="education" className="w-full py-20 md:py-32 border-t">
+        <section id="education" className="w-full py-12 md:py-20 lg:py-24 border-t">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
@@ -124,7 +124,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="contact" className="w-full py-20 md:py-32 border-t">
+        <section id="contact" className="w-full py-12 md:py-20 lg:py-24 border-t">
           <div className="container grid items-center justify-center gap-4 px-4 text-center md:px-6">
             <div className="space-y-3">
               <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight font-headline">Get in Touch</h2>
