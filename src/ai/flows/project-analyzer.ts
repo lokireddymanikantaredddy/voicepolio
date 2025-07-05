@@ -13,6 +13,9 @@ import {z} from 'genkit';
 const ProjectAnalyzerInputSchema = z.object({
   title: z.string().describe('The title of the project.'),
   description: z.string().describe('The description of the project.'),
+  technologies: z.array(z.string()).describe('The technologies used in the project.'),
+  liveUrl: z.string().describe('The live demo URL of the project.'),
+  repoUrl: z.string().describe('The repository URL of the project.')
 });
 export type ProjectAnalyzerInput = z.infer<typeof ProjectAnalyzerInputSchema>;
 
@@ -20,7 +23,7 @@ const ProjectAnalyzerOutputSchema = z.object({
   analysis: z
     .string()
     .describe(
-      'A detailed analysis of the project, including strengths, challenges, and next steps.'
+      'A detailed analysis of the project, including technical overview, implementation details, and potential improvements.'
     ),
 });
 export type ProjectAnalyzerOutput = z.infer<typeof ProjectAnalyzerOutputSchema>;
@@ -35,17 +38,40 @@ const prompt = ai.definePrompt({
   name: 'projectAnalyzerPrompt',
   input: {schema: ProjectAnalyzerInputSchema},
   output: {schema: ProjectAnalyzerOutputSchema},
-  prompt: `You are an expert tech industry analyst. Your goal is to provide a concise, insightful analysis of a given project based on its title and description.
+  prompt: `You are an expert full-stack developer and technical analyst. Your goal is to provide a comprehensive analysis of a software project based on its details.
 
-Your analysis should be structured into three sections:
-1.  **Strengths**: What is compelling about this project? What are its key selling points?
-2.  **Potential Challenges**: What are some potential hurdles or risks this project might face in the real world (e.g., competition, technical complexity, market adoption)?
-3.  **Suggested Next Steps**: What are 2-3 concrete, actionable steps that could be taken to improve or advance this project?
+Your analysis should cover:
 
-Please provide the output as a single block of text. Use newlines to separate paragraphs and sections. Do not use Markdown formatting like hashes or asterisks.
+1. Technical Overview:
+   - Core technologies used and their roles
+   - Architecture and implementation approach
+   - Key features and functionalities
 
-Project Title: {{{title}}}
-Project Description: {{{description}}}`,
+2. Implementation Highlights:
+   - Notable technical decisions
+   - Integration points and data flow
+   - User experience considerations
+   - Performance optimizations
+
+3. Areas for Enhancement:
+   - Potential technical improvements
+   - Scalability considerations
+   - Additional features that could add value
+   - Security and performance optimizations
+
+4. Development Journey:
+   - Technical challenges overcome
+   - Learning outcomes
+   - Best practices implemented
+
+Please provide a well-structured analysis that would be helpful for both technical and non-technical readers. Focus on concrete details and specific technical aspects while maintaining clarity.
+
+Project Details:
+Title: {{{title}}}
+Description: {{{description}}}
+Technologies: {{#each technologies}}{{this}}{{#unless @last}}, {{/unless}}{{/each}}
+Live Demo: {{{liveUrl}}}
+Repository: {{{repoUrl}}}`,
 });
 
 const projectAnalyzerFlow = ai.defineFlow(

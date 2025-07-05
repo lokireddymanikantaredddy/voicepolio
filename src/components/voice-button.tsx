@@ -19,11 +19,14 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
+import { Chatbot } from '@/components/chatbot';
+import type { ChatbotHandle } from '@/components/chatbot';
 
 export function VoiceButton() {
   const { toast } = useToast();
   const { theme, setTheme } = useTheme();
   const handleVoiceResultRef = useRef<(command: string) => Promise<void>>();
+  const chatbotRef = useRef<ChatbotHandle>(null);
   
   const [analysis, setAnalysis] = useState<{ title: string; content: string } | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -38,7 +41,11 @@ export function VoiceButton() {
 
   const handleVoiceResult = useCallback(async (command: string) => {
     if (!command) return;
-    toast({ title: "Heard you!", description: `Processing: "${command}"` });
+    toast({ 
+      title: "Heard you!", 
+      description: `Processing: "${command}"`,
+      duration: 2000
+    });
     
     try {
       const projectTitles = projects.map(p => p.title);
@@ -49,12 +56,17 @@ export function VoiceButton() {
           const element = document.getElementById(target);
           if (element) {
             element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            toast({ title: "Navigating...", description: `Going to ${target}` });
+            toast({ 
+              title: "Navigating...", 
+              description: `Going to ${target}`,
+              duration: 2000
+            });
           } else {
              toast({
               variant: "destructive",
               title: "Navigation failed",
               description: `Sorry, I couldn't find a section called "${target}".`,
+              duration: 2000
             });
           }
           break;
@@ -63,24 +75,37 @@ export function VoiceButton() {
           const element = document.getElementById(target);
           if (element) {
             element.click();
-            toast({ title: "Action completed!", description: `Flipping card.` });
+            toast({ 
+              title: "Action completed!", 
+              description: `Flipping card.`,
+              duration: 2000
+            });
           } else {
              toast({
               variant: "destructive",
               title: "Action failed",
               description: `Could not find element to click: "${target}".`,
+              duration: 2000
             });
           }
           break;
         }
         case 'stopListening':
           stopListening();
-          toast({ title: "Ok", description: "Microphone off." });
+          toast({ 
+            title: "Ok", 
+            description: "Microphone off.",
+            duration: 2000
+          });
           break;
         case 'changeTheme': {
           const newTheme = theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'light' : 'dark';
           setTheme(newTheme);
-          toast({ title: "Theme changed!", description: `Switched to ${newTheme} mode.` });
+          toast({ 
+            title: "Theme changed!", 
+            description: `Switched to ${newTheme} mode.`,
+            duration: 2000
+          });
           break;
         }
         case 'openProjectLink': {
@@ -89,12 +114,17 @@ export function VoiceButton() {
             const element = document.getElementById(`project-${projectIndex}-${linkType}`);
             if (element) {
               element.click();
-              toast({ title: "Opening link...", description: `Opening ${linkType} for ${target}.` });
+              toast({ 
+                title: "Opening link...", 
+                description: `Opening ${linkType} for ${target}.`,
+                duration: 2000
+              });
             } else {
                toast({
                 variant: "destructive",
                 title: "Action failed",
                 description: `Could not find ${linkType} link for "${target}".`,
+                duration: 2000
               });
             }
           } else {
@@ -102,27 +132,147 @@ export function VoiceButton() {
               variant: "destructive",
               title: "Action failed",
               description: `Could not find project: "${target}".`,
+              duration: 2000
             });
           }
+          break;
+        }
+        case 'openSocial': {
+          const socialLinks = {
+            github: document.getElementById('social-github'),
+            linkedin: document.getElementById('social-linkedin'),
+            twitter: document.getElementById('social-twitter'),
+          };
+          
+          const link = socialLinks[target as keyof typeof socialLinks];
+          if (link) {
+            link.click();
+            toast({ 
+              title: "Opening link...", 
+              description: `Opening ${target}`,
+              duration: 2000
+            });
+          } else {
+            toast({
+              variant: "destructive",
+              title: "Action failed",
+              description: `Could not find link for ${target}.`,
+              duration: 2000
+            });
+          }
+          break;
+        }
+        case 'toggleChatbot': {
+          const chatbotButton = document.getElementById('chatbot-trigger');
+          if (chatbotButton) {
+            chatbotButton.click();
+            toast({ 
+              title: "Chatbot", 
+              description: `${target === 'open' ? 'Opening' : 'Closing'} chatbot` 
+            });
+          } else {
+            toast({
+              variant: "destructive",
+              title: "Action failed",
+              description: "Could not find chatbot control.",
+            });
+          }
+          break;
+        }
+        case 'typeInChat': {
+          const tryTypeInChat = (retries = 5) => {
+            if (chatbotRef.current) {
+              chatbotRef.current.open();
+              chatbotRef.current.setInputValue(target);
+              toast({ 
+                title: "Chatbot ready", 
+                description: "Message typed in chat. Press Enter to send." 
+              });
+            } else if (retries > 0) {
+              setTimeout(() => tryTypeInChat(retries - 1), 100);
+            } else {
+              toast({
+                variant: "destructive",
+                title: "Action failed",
+                description: "Could not access chatbot.",
+              });
+            }
+          };
+          tryTypeInChat();
           break;
         }
         case 'analyzeProject': {
           const project = projects.find(p => p.title.toLowerCase() === target.toLowerCase());
           if (project) {
-              toast({ title: "Analyzing project...", description: `Asking for insights on "${project.title}".` });
-              setIsDialogOpen(true);
-              setAnalysis(null);
-              try {
-                  const result = await analyzeProject({ title: project.title, description: project.description });
-                  setAnalysis({ title: project.title, content: result.analysis });
-              } catch(e) {
-                  console.error(e);
-                  toast({ variant: "destructive", title: "Analysis Error", description: "Failed to analyze project." });
-                  setIsDialogOpen(false);
-              }
+            toast({ 
+              title: "Analyzing project...", 
+              description: `Asking for insights on "${project.title}"`,
+              duration: 2000
+            });
+            setIsDialogOpen(true);
+            setAnalysis(null);
+            try {
+              const result = await analyzeProject({ 
+                title: project.title, 
+                description: project.description,
+                technologies: project.tags,
+                liveUrl: project.liveUrl || '#',
+                repoUrl: project.repoUrl || '#'
+              });
+              setAnalysis({ title: project.title, content: result.analysis });
+            } catch(e) {
+              console.error(e);
+              toast({ 
+                variant: "destructive", 
+                title: "Analysis Error", 
+                description: "Failed to analyze project.",
+                duration: 2000
+              });
+              setIsDialogOpen(false);
+            }
           } else {
-              toast({ variant: "destructive", title: "Analysis Failed", description: `Could not find project: "${target}".` });
+            toast({ 
+              variant: "destructive", 
+              title: "Analysis Failed", 
+              description: `Could not find project: "${target}"`,
+              duration: 2000
+            });
           }
+          break;
+        }
+        case 'scrollUp': {
+          window.scrollBy({ top: -window.innerHeight / 2, behavior: 'smooth' });
+          toast({ title: 'Scrolled up' });
+          break;
+        }
+        case 'scrollDown': {
+          window.scrollBy({ top: window.innerHeight / 2, behavior: 'smooth' });
+          toast({ title: 'Scrolled down' });
+          break;
+        }
+        case 'goBack': {
+          window.history.back();
+          toast({ title: 'Going back' });
+          break;
+        }
+        case 'chatbotExplain': {
+          const tryChatbotExplain = (retries = 5) => {
+            if (chatbotRef.current) {
+              chatbotRef.current.open();
+              chatbotRef.current.setInputValue(target);
+              chatbotRef.current.submit();
+              toast({ title: 'Chatbot', description: 'Explaining project...' });
+            } else if (retries > 0) {
+              setTimeout(() => tryChatbotExplain(retries - 1), 100);
+            } else {
+              toast({
+                variant: 'destructive',
+                title: 'Action failed',
+                description: 'Could not access chatbot.',
+              });
+            }
+          };
+          tryChatbotExplain();
           break;
         }
         case 'unclear':
@@ -227,6 +377,11 @@ export function VoiceButton() {
             </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+      <div className="fixed inset-0 pointer-events-none z-[100]">
+        <div className="pointer-events-auto">
+          <Chatbot ref={chatbotRef} />
+        </div>
+      </div>
     </>
   );
 }
