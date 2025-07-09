@@ -288,7 +288,7 @@ export function VoiceButton() {
       toast({
         variant: "destructive",
         title: "AI Error",
-        description: "There was an error processing your voice command.",
+        description: e && typeof e === 'object' && 'message' in e ? (e as any).message : String(e) || "There was an error processing your voice command.",
       });
       console.error(e);
     }
